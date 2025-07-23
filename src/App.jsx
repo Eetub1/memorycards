@@ -7,17 +7,25 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0)
   //bestscoren voisi hakea localstoragesta
   const [bestScore, setBestScore] = useState(0)
+  const [clickedPokemon, setClickedPokemon] = useState([])
 
   const pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "bulbasaur"
     , "mewtwo", "charizard", "arcanine"]
 
-  const clickedPokemon = []
-
   function handleClick(event) {
-    console.log(event.target)
-    //jos clikattu pokemoni on jo taulukossa, niin resettaa score
-    //ja aseta se best scoreksi jos se on suurempi kuin tämänhetkinen bestscore
+    const clicked = event.target.id
 
+    if (!(clickedPokemon.length > 0 && clickedPokemon.find(pokemon => pokemon === clicked))) {
+      //clickedPokemon.push(clicked)
+      setClickedPokemon(prev => ([
+        ...prev,
+        clicked
+      ]))
+      setCurrentScore(currentScore + 1)
+    } else {
+      setCurrentScore(0)
+      setClickedPokemon([])
+    }
     //täällä pitäisi myös renderöidä pokemonit uudestaan
   }
 
