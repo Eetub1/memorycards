@@ -21,7 +21,10 @@ function App() {
     //täällä pitäisi myös renderöidä pokemonit uudestaan
   }
 
-  function setBestScore
+  function updateBestScore() {
+    if (currentScore > bestScore) setBestScore(currentScore)
+      return bestScore
+  }
 
   useEffect(() => {
     if (isAllowedToFetch === false) return
@@ -46,7 +49,7 @@ function App() {
       <div className={showButton? "hideElement" : "showElement"}>
         <h2>Pokemon memorycards</h2>
         <p>Current score: {currentScore}</p>
-        <p>Best score: {setBestScore}</p>
+        <p>Best score: {updateBestScore()}</p>
       </div>
     </div>
   )
