@@ -9,14 +9,13 @@ function App() {
   const [bestScore, setBestScore] = useState(0)
   const [clickedPokemon, setClickedPokemon] = useState([])
 
-  const pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "bulbasaur"
+  let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "bulbasaur"
     , "mewtwo", "charizard", "arcanine"]
 
   function handleClick(event) {
-    const clicked = event.target.id
+    const clicked = event.currentTarget.id
 
     if (!(clickedPokemon.length > 0 && clickedPokemon.find(pokemon => pokemon === clicked))) {
-      //clickedPokemon.push(clicked)
       setClickedPokemon(prev => ([
         ...prev,
         clicked
@@ -26,7 +25,19 @@ function App() {
       setCurrentScore(0)
       setClickedPokemon([])
     }
-    //täällä pitäisi myös renderöidä pokemonit uudestaan
+    const newArr = [...pokemon]
+    const shuffled = shuffle(newArr) 
+    setPokemon(shuffled)
+  }
+
+  function shuffle(array) {
+    const shuffledArr = []
+    for (let i = array.length - 1; i >= 0; i--) {
+      const index = Math.floor(Math.random() * (array.length))
+      shuffledArr.push(array[index])
+      array.splice(index, 1)
+    }
+    return shuffledArr
   }
 
   function updateBestScore() {
@@ -40,25 +51,30 @@ function App() {
       pokemonNames.map(name => 
         fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
           .then(res => res.json())
-          .then(data => ({ name, img: data.sprites.front_default }))
+          .then(data => ({name: name, img: data.sprites.front_default}))
       )
     ).then(results => setPokemon(results))
   }, [isAllowedToFetch])
 
   return (
     <div id="mainContent">
+
       <div id="cardsContainer">
         {pokemon.map(poke => <DrawPokemon key={poke.name} poke={poke} handleClick={handleClick}/>)}
       </div>
+
       <button onClick={() => {
         setShowButton(false)
         setIsAllowedToFetch(true)
-      }} className={showButton? "showElement" : "hideElement"}>Start game</button>
+      }} className={showButton? "showElement" : "hideElement"}>Start game
+      </button>
+
       <div className={showButton? "hideElement" : "showElement"}>
         <h2>Pokemon memorycards</h2>
         <p>Current score: {currentScore}</p>
         <p>Best score: {updateBestScore()}</p>
       </div>
+
     </div>
   )
 }
@@ -66,8 +82,8 @@ function App() {
 function DrawPokemon({poke, handleClick}) {
   return (
     <div id={poke.name} onClick={handleClick} className="pokemonCard">
-      <p id={poke.name} className="pokemonTitle">{poke.name}</p>
-      <img id={poke.name} src={poke.img} alt="" />
+      <p className="pokemonTitle">{poke.name}</p>
+      <img src={poke.img} alt="" />
     </div>
   )
 }
