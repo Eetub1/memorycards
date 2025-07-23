@@ -8,11 +8,20 @@ function App() {
   //bestscoren voisi hakea localstoragesta
   const [bestScore, setBestScore] = useState(0)
   const [clickedPokemon, setClickedPokemon] = useState([])
+  const [isGameOver, setIsGameOver] = useState(false)
 
-  let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "bulbasaur"
-    , "mewtwo", "charizard", "arcanine"]
+  //let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "bulbasaur", "mewtwo", "charizard", "arcanine", "squirtle"]
+  let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax"]
 
   function handleClick(event) {
+    if (isGameOver === true) return
+
+    if (currentScore === pokemon.length) {
+      setIsGameOver(true)
+      console.log("T")
+      return
+    }
+
     const clicked = event.currentTarget.id
 
     if (!(clickedPokemon.length > 0 && clickedPokemon.find(pokemon => pokemon === clicked))) {
@@ -68,6 +77,10 @@ function App() {
         setIsAllowedToFetch(true)
       }} className={showButton? "showElement" : "hideElement"}>Start game
       </button>
+
+      <div className={isGameOver? "showElement" : "hideElement"}>
+        <p>Gongrats, you won!</p>
+      </div>
 
       <div className={showButton? "hideElement" : "showElement"}>
         <h2>Pokemon memorycards</h2>
