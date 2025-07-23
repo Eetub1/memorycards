@@ -1,0 +1,49 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  border: 1px solid red;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  border: 3px solid gold;
+}
+
+#mainContent {
+  border: 2px solid blue;
+}
+
+#cardsContainer {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+
+.pokemonCard {
+  border: 2px solid black;
+  border-radius: 7px;
+}
+
+.pokemonCard:hover {
+  cursor: pointer;
+  background-color: rgb(235, 235, 235);
+}
+
+.pokemonTitle {
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize; 
+}
+
+.showElement {
+  display: block;
+}
+
+.hideElement {
+  display: none;
+}
