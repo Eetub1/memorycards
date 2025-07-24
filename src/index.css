@@ -3,22 +3,42 @@ html, body {
   padding: 0;
 }
 
-div {
-  border: 1px solid red;
+body {
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  background-color: #EEEEEE;
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 4px;
+  max-width: 8rem;
+}
+
+button:hover {
+  background-color: wheat;
 }
 
 #root {
-  width: 100vw;
+  width: 30vw;
   height: 100vh;
-  border: 3px solid gold;
 }
 
 #mainContent {
-  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#infoText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #cardsContainer {
-  display: inline-grid;
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 20px;
@@ -27,11 +47,14 @@ div {
 .pokemonCard {
   border: 2px solid black;
   border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pokemonCard:hover {
   cursor: pointer;
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(211, 211, 211);
 }
 
 .pokemonTitle {
@@ -46,4 +69,20 @@ div {
 
 .hideElement {
   display: none;
+}
+
+#endScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.showEndScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hideEndScreen {
+  display: none
 }

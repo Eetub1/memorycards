@@ -10,17 +10,12 @@ function App() {
   const [clickedPokemon, setClickedPokemon] = useState([])
   const [isGameOver, setIsGameOver] = useState(false)
 
-  //let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "bulbasaur", "mewtwo", "charizard", "arcanine", "squirtle"]
-  let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax"]
+  let pokemonNames = ["ditto", "eevee", "pikachu", "rhydon", "snorlax", "mewtwo"]
+  //let pokemonNames = ["eevee", "pikachu", "rhydon", "snorlax", "bulbasaur", "mewtwo", "charizard", "arcanine", "squirtle"]
+  pokemonNames = shuffle(pokemonNames)
 
   function handleClick(event) {
     if (isGameOver === true) return
-
-    if (currentScore === pokemon.length) {
-      setIsGameOver(true)
-      console.log("T")
-      return
-    }
 
     const clicked = event.currentTarget.id
 
@@ -49,10 +44,25 @@ function App() {
     return shuffledArr
   }
 
+  function playAgain() {
+    //currentscore 0
+    //isGameOver false
+    //clickedPokemon []
+    setCurrentScore(0)
+    setIsGameOver(false)
+    setClickedPokemon([])
+  }
+
   function updateBestScore() {
     if (currentScore > bestScore) setBestScore(currentScore)
       return bestScore
   }
+
+  useEffect(() => {
+    if (currentScore === pokemon.length && pokemon.length > 0) {
+      setIsGameOver(true);
+    }
+  }, [currentScore]);
 
   useEffect(() => {
     if (isAllowedToFetch === false) return
@@ -68,8 +78,10 @@ function App() {
   return (
     <div id="mainContent">
 
-      <div id="cardsContainer">
-        {pokemon.map(poke => <DrawPokemon key={poke.name} poke={poke} handleClick={handleClick}/>)}
+      <div id="infoText">
+        <h2>Pokemon memorycards</h2>
+        <p>Current score: {currentScore}</p>
+        <p>Best score: {updateBestScore()}</p>
       </div>
 
       <button onClick={() => {
@@ -78,14 +90,13 @@ function App() {
       }} className={showButton? "showElement" : "hideElement"}>Start game
       </button>
 
-      <div className={isGameOver? "showElement" : "hideElement"}>
-        <p>Gongrats, you won!</p>
+      <div id="cardsContainer">
+        {pokemon.map(poke => <DrawPokemon key={poke.name} poke={poke} handleClick={handleClick}/>)}
       </div>
 
-      <div className={showButton? "hideElement" : "showElement"}>
-        <h2>Pokemon memorycards</h2>
-        <p>Current score: {currentScore}</p>
-        <p>Best score: {updateBestScore()}</p>
+      <div className={isGameOver? "showEndScreen" : "hideEndScreen"}>
+        <p>Gongrats, you won!</p>
+        <button onClick={playAgain}>Play again?</button>
       </div>
 
     </div>
